@@ -101,3 +101,23 @@ exports.createAnimalWithImage = catchAsync(async (req, res, next) => {
     next(err);
   }
 });
+
+exports.deleteAnimal = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const animal = await Animal.findByIdAndDelete(id);
+
+  if (!animal) {
+    return next(new AppError("Nie znaleziono zwierzęcia o podanym ID", 404));
+  }
+
+  await Promise.all(
+    animal.photos.map(async (photo) => {
+      await fs.promises.unlink(`public/images/animals/${photo}`);
+    })
+  );
+
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});

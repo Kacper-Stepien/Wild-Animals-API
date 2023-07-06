@@ -12,8 +12,9 @@ router
     animalController.createAnimalWithImage
   );
 
-router.route("/:id").get(animalController.getAnimal);
-//   .patch(animalController.updateAnimal)
-//   .delete(animalController.deleteAnimal);
+router
+  .route("/:id")
+  .get(animalController.getAnimal)
+  .delete(animalController.deleteAnimal);
 
 module.exports = router;
