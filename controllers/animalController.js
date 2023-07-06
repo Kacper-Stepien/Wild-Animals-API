@@ -1,9 +1,34 @@
 const fs = require("fs");
+const sharp = require("sharp");
 
 const Animal = require("../models/animalModel");
 const catchAsync = require("../utils/catchAsync");
 const CustomQuery = require("../utils/customQuery");
+const AppError = require("../utils/appError");
 const upload = require("../utils/multer");
+
+exports.uploadAnimalPhotos = upload.array("photos", 5);
+
+exports.resizeAnimalPhotos = catchAsync(async (req, res, next) => {
+  if (!req.files) return next();
+
+  const photos = [];
+  await Promise.all(
+    req.files.map(async (file, i) => {
+      const fileName = `animal-${req.body.name}-${Date.now()}-${i + 1}.jpeg`;
+      await sharp(req.files[i].buffer)
+        .resize(1920, 1080)
+        .toFormat("jpeg")
+        .jpeg({ quality: 90 })
+        .toFile(`public/images/animals/${fileName}`);
+      photos.push(fileName);
+    })
+  );
+
+  req.body.photos = photos;
+
+  next();
+});
 
 exports.getAllAnimals = catchAsync(async (req, res, next) => {
   console.log(req.query);
@@ -45,4 +70,34 @@ exports.createAnimal = catchAsync(async (req, res, next) => {
       animal,
     },
   });
+});
+
+exports.createAnimalWithImage = catchAsync(async (req, res, next) => {
+  if (!req.body.photos || req.body.photos.length === 0) {
+    throw new AppError(
+      "Nie wybrano żadnego zdjęcia. Wymagane jest przynajmniej jedno zdjęcie",
+      400
+    );
+  }
+
+  try {
+    const animal = await Animal.create(req.body);
+    animal.photos = req.body.photos;
+    await animal.save();
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        animal,
+      },
+    });
+  } catch (err) {
+    await Promise.all(
+      req.body.photos.map(async (photo) => {
+        await fs.promises.unlink(`public/images/animals/${photo}`);
+      })
+    );
+
+    next(err);
+  }
 });

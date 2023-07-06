@@ -76,10 +76,10 @@ const animalSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Zwierzę musi mieć średnią liczbę potomków"],
   },
-  gestation_period: {
-    type: String,
-    required: [true, "Zwierzę musi mieć okres ciąży"],
-  },
+  // average_litter_size: {
+  //   type: String,
+  //   required: [true, "Zwierzę musi mieć okres ciąży"],
+  // },
   lifestyle: {
     type: String,
     enum: ["w stadzie", "samotnik", "w parach", "w rodzinie", "w grupie"],
