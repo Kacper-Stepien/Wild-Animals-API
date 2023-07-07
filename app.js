@@ -10,17 +10,14 @@ const animalRouter = require("./routes/animalRoutes");
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(mongoSanitize());
 app.use(xss());
 
-// Serve static files
 app.use(express.static(`${__dirname}/public`));
 
-// Routes
 app.use("/api/v1/animals", animalRouter);
 
 app.all("*", (req, res, next) => {

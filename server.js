@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
-const app = require("./app");
 const { default: mongoose } = require("mongoose");
+const app = require("./app");
 
 dotenv.config({ path: "./config.env" });
 

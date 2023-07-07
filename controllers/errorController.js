@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const checkDBConnection = async (err) => {
   const isConnected = mongoose.connection.readyState;
   if (isConnected === 0) {
-    err.message = "Błąd połączenia z bazą danych";
+    err.message = "No connection to database";
     err.statusCode = 500;
     err.status = "error";
   }
@@ -12,12 +12,12 @@ const checkDBConnection = async (err) => {
 
 const handleValidationError = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
-  const message = `Nieprawidłowe dane wejściowe. ${errors.join(". ")}`;
+  const message = `Invalid input data. ${errors.join(". ")}`;
   return new AppError(message, 400, errors);
 };
 
 const handleInvalidId = () => {
-  const message = "Nieprawidłowe ID";
+  const message = "Invalid ID";
   return new AppError(message, 400);
 };
 

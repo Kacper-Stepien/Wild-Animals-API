@@ -30,7 +30,6 @@ class CustomQuery {
 
     availableFilterFields.forEach((field) => {
       if (lodash.isArray(this.queryString[field])) {
-        // Spłaszczamy wartość tablicy za pomocą flatMap()
         const flattenedValues = lodash.flatMap(this.queryString[field]);
         if (flattenedValues.length > 0) {
           filters[field] = { $in: flattenedValues };

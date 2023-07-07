@@ -7,7 +7,7 @@ const multerFilter = (req, file, cb) => {
     cb(null, true);
   } else {
     cb(
-      new AppError("Plik nie jest zdjęciem! Proszę o przesłanie zdjęcia!", 400),
+      new AppError("File is not an image! Please upload only images.", 400),
       false
     );
   }

@@ -1,7 +1,9 @@
 # Wild-Animals-API
+
 This is a minimalist API built with Node.js, Express, and MongoDB to get data about wild animals. It offers endpoints for retrieving information on various animals and supports sorting and filtering based on different criteria.
 
 ## Table of contents
+
 - [Technologies used in the project](#technologies-used-in-the-project)
 - [Features](#features)
 - [API Endpoints](#api-endpoints)
@@ -11,13 +13,16 @@ This is a minimalist API built with Node.js, Express, and MongoDB to get data ab
 - [Pagination](#pagination)
 - [Photos](#photos)
 - [Example Complex Query](#example-complex-query)
+- [Search by Name](#search-by-name)
 - [Note](#note)
 - [Contact](#contact)
 
 ## Technologies used in the project:
+
 [![](https://skills.thijs.gg/icons?i=js,nodejs,express,mongo,&theme=dark)](https://skills.thijs.gg)
 
 ## Features:
+
 - Retrieve information about various wild animals
 - Sort animals based on different criteria such as name, species, population, location, maximum lifespan, and maximum weight
 - Filter animals based on specific parameters
@@ -25,6 +30,7 @@ This is a minimalist API built with Node.js, Express, and MongoDB to get data ab
 - Flexible and scalable solution for handling wild animal data
 
 ## API Endpoints
+
 Retrieve a list of wild animals
 
     GET /api/v1/animals
@@ -33,11 +39,15 @@ Retrieve a specific animal by ID:
 
     GET /api/v1/animals/:id
 
+Search animals by name:
+
+    GET /api/v1/animals/search/:name
 
 ## Animal Model
+
 Each animal object returned will have the following fields:
 
-- <b>_id</b>: The unique identifier of the animal.
+- <b>\_id</b>: The unique identifier of the animal.
 - <b>name</b>: The name of the animal.
 - <b>species<b/>: The species of the animal, which can be one of the following values:
   - "ssak",
@@ -111,6 +121,7 @@ Each animal object returned will have the following fields:
 These fields provide comprehensive information about each animal and their characteristics.
 
 ## Sorting
+
 The API supports sorting animals based on different criteria. When making a request to retrieve a list of animals, you can include the sort parameter in the query string to specify the sorting criteria. The available sorting fields include:
 
 - name (ascending)
@@ -130,11 +141,12 @@ The API supports sorting animals based on different criteria. When making a requ
 - max_speed (ascending)
 - -max_speed (descending)
 
-For example, to retrieve a list of animals sorted by population in descending order, you can make a request to 
-                    
+For example, to retrieve a list of animals sorted by population in descending order, you can make a request to
+
     GET /api/v1/animals?sort=-population
 
 ## Filtering
+
 The API supports filtering animals based on various parameters. When making a request to retrieve a list of animals, you can include different filter parameters in the query string to narrow down the results. The available filter fields include:
 
 - species: Filter animals by species. Possible values: "ssak", "gad", "ptak", "ryba", "płaz", "owad", "pająk", "inny".
@@ -148,11 +160,12 @@ The API supports filtering animals based on various parameters. When making a re
 - min_height and max_height: Filter animals by height range.
 - min_life_span and max_life_span: Filter animals by lifespan range.
 
-For example, to retrieve a list of animals with a species of "ssak" and a location of "afryka" or of "europa", you can make a request to 
+For example, to retrieve a list of animals with a species of "ssak" and a location of "afryka" or of "europa", you can make a request to
 
     GET /api/v1/animals?species=ssak&location=afryka&location=europa
 
 ## Pagination
+
 The API supports pagination to retrieve a subset of animal data at a time. To paginate the results, include the following query parameters in your request:
 
 <b>page</b>: The page number of the results (default: 1).<br>
@@ -336,6 +349,7 @@ The response request will include additional information <b>totalAnimals</b> to 
     }
 
 ## Photos
+
 The API provides a collection of photo URLs for each animal. The photo URLs are stored in an array called photos for each animal object. To view a specific photo, you can append the photo URL to the base URL by using the following format:
 
     /images/animals/{photo_filename}
@@ -349,13 +363,28 @@ For example, to open one of the photos of the African Buffalo (Bawół Afrykańs
     /api/v1/animals?location=afryka&location=europa&diet=mięsożerne&page=2&_per_page=4&sort=-max_life_span
 
 In this example, we have a complex query that combines multiple parameters to retrieve a specific set of animal data. Let's break down what each parameter does:
+
 - <b>location=afryka&location=europa</b>: This parameter filters animals that can be found in either Africa or Europe. We are specifying multiple values for the location parameter using the same parameter name.
 - <b>diet=mięsożerne</b>: This parameter filters animals based on their diet, specifically selecting animals that are carnivores.
-- <b>page=2&_per_page=4</b>: These parameters enable pagination and indicate that we want to retrieve the second page of results with four animals per page.
+- <b>page=2&\_per_page=4</b>: These parameters enable pagination and indicate that we want to retrieve the second page of results with four animals per page.
 - <b>sort=-max_life_span</b>: This parameter sorts the animals based on their maximum lifespan in descending order. The - sign before max_life_span indicates a descending sort.
 
+## Search by Name
+
+A new endpoint has been added to the API to search for animals by name. You can use the following endpoint to retrieve a list of animals whose names match the provided name:
+
+    GET /api/v1/animals/search/:name
+
+For example, to search for animals with the name "lion", you can make a request to:
+
+    GET /api/v1/animals/search/lion
+
+This will return a list of animals whose names include "lion" in a case-insensitive manner.
+
 ## Note
-Currently, the API provides only a limited set of animal data. However, we plan to continuously add new data to expand the collection of available information about wild animals. Please check back regularly as we will be updating our database and adding more animal species.
+
+Currently, the API provides only a limited set of animal data. However, I plan to continuously add new data to expand the collection of available information about wild animals. Please check back regularly as I will be updating database and adding more animal species.
 
 ## Contact
+
 If you have any questions or feedback, please contact me at kacper2007x48@gmail.com

@@ -14,7 +14,9 @@ router
 
 router
   .route("/:id")
-  .get(animalController.getAnimal)
+  .get(animalController.getAnimalByID)
   .delete(animalController.deleteAnimal);
+
+router.route("/search/:name").get(animalController.searchAnimalsByName);
 
 module.exports = router;

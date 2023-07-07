@@ -2,6 +2,7 @@ const fs = require("fs");
 const sharp = require("sharp");
 
 const Animal = require("../models/animalModel");
+
 const catchAsync = require("../utils/catchAsync");
 const CustomQuery = require("../utils/customQuery");
 const AppError = require("../utils/appError");
@@ -14,8 +15,11 @@ exports.resizeAnimalPhotos = catchAsync(async (req, res, next) => {
 
   const photos = [];
   await Promise.all(
-    req.files.map(async (file, i) => {
-      const fileName = `animal-${req.body.name}-${Date.now()}-${i + 1}.jpeg`;
+    req.files.map(async (_, i) => {
+      const fileName = `animal-${req.body.name.replace(
+        " ",
+        "-"
+      )}-${Date.now()}-${i + 1}.jpeg`;
       await sharp(req.files[i].buffer)
         .resize(1920, 1080)
         .toFormat("jpeg")
@@ -48,10 +52,10 @@ exports.getAllAnimals = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAnimal = catchAsync(async (req, res, next) => {
+exports.getAnimalByID = catchAsync(async (req, res, next) => {
   const animal = await Animal.findById(req.params.id);
 
-  if (!animal) {
+  if (!animal || animal.length === 0) {
     return next(new AppError("No animal found with that ID", 404));
   }
 
@@ -59,6 +63,25 @@ exports.getAnimal = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       animal,
+    },
+  });
+});
+
+exports.searchAnimalsByName = catchAsync(async (req, res, next) => {
+  const name = req.params.name;
+
+  const animals = await Animal.find({
+    name: { $regex: new RegExp(name, "i") },
+  }).exec();
+  if (!animals || animals.length === 0) {
+    return next(new AppError("No animal found with that name", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    results: animals.length,
+    data: {
+      animals,
     },
   });
 });
