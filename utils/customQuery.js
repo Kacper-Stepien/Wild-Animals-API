@@ -16,6 +16,14 @@ class CustomQuery {
       "max_population", // Maksymalna populacja
       "min_weight", // Minimalna waga
       "max_weight", // Maksymalna waga
+      "min_speed", // Minimalna prędkość
+      "max_speed", // Maksymalna prędkość
+      "min_length", // Minimalna długość
+      "max_length", // Maksymalna długość
+      "max_height", // Maksymalna wysokość
+      "min_height", // Minimalna wysokość
+      "min_life_span", // Minimalna długość życia
+      "max_life_span", // Maksymalna długość życia
     ];
 
     const filters = {};
@@ -28,7 +36,57 @@ class CustomQuery {
           filters[field] = { $in: flattenedValues };
         }
       } else if (this.queryString[field]) {
-        filters[field] = this.queryString[field];
+        if (field === "min_population") {
+          filters["population"] = {
+            $gte: this.queryString[field],
+          };
+        } else if (field === "max_population") {
+          filters["population"] = {
+            $lte: this.queryString[field],
+          };
+        } else if (field === "min_weight") {
+          filters["max_weight"] = {
+            $gte: this.queryString[field],
+          };
+        } else if (field === "max_weight") {
+          filters["min_weight"] = {
+            $lte: this.queryString[field],
+          };
+        } else if (field === "min_speed") {
+          filters["max_speed"] = {
+            $gte: this.queryString[field],
+          };
+        } else if (field === "max_speed") {
+          filters["max_speed"] = {
+            $lte: this.queryString[field],
+          };
+        } else if (field === "min_length") {
+          filters["max_length"] = {
+            $gte: this.queryString[field],
+          };
+        } else if (field === "max_length") {
+          filters["min_length"] = {
+            $lte: this.queryString[field],
+          };
+        } else if (field === "min_height") {
+          filters["max_height"] = {
+            $gte: this.queryString[field],
+          };
+        } else if (field === "max_height") {
+          filters["min_height"] = {
+            $lte: this.queryString[field],
+          };
+        } else if (field === "min_life_span") {
+          filters["max_life_span"] = {
+            $gte: this.queryString[field],
+          };
+        } else if (field === "max_life_span") {
+          filters["min_life_span"] = {
+            $lte: this.queryString[field],
+          };
+        } else {
+          filters[field] = this.queryString[field];
+        }
       }
     });
 

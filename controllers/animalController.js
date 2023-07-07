@@ -31,15 +31,17 @@ exports.resizeAnimalPhotos = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllAnimals = catchAsync(async (req, res, next) => {
-  console.log(req.query);
   const query = Animal.find();
   const customQuery = new CustomQuery(query, req.query);
 
-  const animals = await customQuery.filter().paginate().sort().query;
+  const filteredQuery = customQuery.filter().query;
+  const totalAnimals = await Animal.countDocuments(filteredQuery);
+  const animals = await customQuery.paginate().sort().query;
 
   res.status(200).json({
     status: "success",
     results: animals.length,
+    totalAnimals,
     data: {
       animals,
     },
@@ -50,7 +52,7 @@ exports.getAnimal = catchAsync(async (req, res, next) => {
   const animal = await Animal.findById(req.params.id);
 
   if (!animal) {
-    return next(new AppError("Nie znaleziono zwierzęcia o podanym ID", 404));
+    return next(new AppError("No animal found with that ID", 404));
   }
 
   res.status(200).json({
@@ -61,23 +63,9 @@ exports.getAnimal = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createAnimal = catchAsync(async (req, res, next) => {
-  const animal = await Animal.create(req.body);
-
-  res.status(201).json({
-    status: "success",
-    data: {
-      animal,
-    },
-  });
-});
-
 exports.createAnimalWithImage = catchAsync(async (req, res, next) => {
   if (!req.body.photos || req.body.photos.length === 0) {
-    throw new AppError(
-      "Nie wybrano żadnego zdjęcia. Wymagane jest przynajmniej jedno zdjęcie",
-      400
-    );
+    throw new AppError("Animal must have at least one photo", 400);
   }
 
   try {
@@ -107,7 +95,7 @@ exports.deleteAnimal = catchAsync(async (req, res, next) => {
   const animal = await Animal.findByIdAndDelete(id);
 
   if (!animal) {
-    return next(new AppError("Nie znaleziono zwierzęcia o podanym ID", 404));
+    return next(new AppError("No animal found with that ID", 404));
   }
 
   await Promise.all(

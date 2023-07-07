@@ -3,17 +3,17 @@ const mongoose = require("mongoose");
 const animalSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Zwierzę musi mieć imię"],
+    required: [true, "Animal must have a name"],
     unique: true,
   },
   species: {
     type: String,
     enum: ["ssak", "gad", "ptak", "ryba", "płaz", "owad", "pająk", "inny"],
-    required: [true, "Zwierzę musi mieć gatunek"],
+    required: [true, "Animal must have a species"],
   },
   description: {
     type: String,
-    required: [true, "Zwierzę musi mieć opis"],
+    required: [true, "Animal must have a description"],
   },
   location: {
     type: [String],
@@ -26,15 +26,15 @@ const animalSchema = new mongoose.Schema({
       "australia",
       "antarktyda",
     ],
-    required: [true, "Zwierzę musi mieć miejsce pobytu"],
+    required: [true, "Animal must have a location"],
   },
   habitat: {
     type: [String],
-    required: [true, "Zwierzę musi mieć środowisko życia"],
+    required: [true, "Animal must have a habitat"],
   },
   population: {
     type: Number,
-    required: [true, "Zwierzę musi mieć populację"],
+    required: [true, "Animal must have a population"],
   },
   diet: {
     type: String,
@@ -54,73 +54,90 @@ const animalSchema = new mongoose.Schema({
       "karbożerne",
       "aasfresser",
     ],
-    required: [true, "Zwierzę musi mieć dietę"],
+    required: [true, "Animal must have a diet"],
+  },
+  prey: {
+    type: [String],
+    required: [true, "Animal must have a prey"],
   },
   min_weight: {
     type: Number,
-    required: [true, "Zwierzę musi mieć minimalną wagę"],
+    required: [true, "Animal must have a minimum weight"],
   },
   max_weight: {
     type: Number,
-    required: [true, "Zwierzę musi mieć maksymalną wagę"],
+    required: [true, "Animal must have a maximum weight"],
   },
   max_speed: {
     type: Number,
-    required: [true, "Zwierzę musi mieć maksymalną prędkość"],
+    required: [true, "Animal must have a maximum speed"],
   },
   predators: {
     type: [String],
-    required: [true, "Zwierzę musi mieć drapieżników"],
+    required: [true, "Animal must have a predators"],
+  },
+  gestation_period: {
+    type: String,
+    required: [true, "Animal must have a gestation period"],
   },
   average_litter_size: {
     type: Number,
-    required: [true, "Zwierzę musi mieć średnią liczbę potomków"],
+    required: [true, "Animal must have a average litter size"],
   },
-  // average_litter_size: {
-  //   type: String,
-  //   required: [true, "Zwierzę musi mieć okres ciąży"],
-  // },
+  age_of_weaning: {
+    type: String,
+    required: [true, "Animal must have a age of weaning"],
+  },
   lifestyle: {
     type: String,
     enum: ["w stadzie", "samotnik", "w parach", "w rodzinie", "w grupie"],
-    required: [true, "Zwierzę musi mieć styl życia"],
+    required: [true, "Animal must have a lifestyle"],
   },
-  average_life_span: {
+  min_life_span: {
     type: Number,
-    required: [true, "Zwierzę musi mieć średnią długość życia"],
+    required: [true, "Animal must have a minimum life span"],
   },
   max_life_span: {
     type: Number,
-    required: [true, "Zwierzę musi mieć maksymalną długość życia"],
+    required: [true, "Animal must have a maximum life span"],
   },
   skin_type: {
     type: String,
-    enum: ["sierść", "pióra", "łuski", "skóra", "pancerz", "chityna", "inne"],
-    required: [true, "Zwierzę musi mieć typ skóry"],
+    enum: [
+      "sierść",
+      "pióra",
+      "łuski",
+      "skóra",
+      "futro",
+      "pancerz",
+      "chityna",
+      "inne",
+    ],
+    required: [true, "Animal must have a skin type"],
   },
   min_length: {
     type: Number,
-    required: [true, "Zwierzę musi mieć minimalną długość"],
+    required: [true, "Animal must have a minimum length"],
   },
   max_length: {
     type: Number,
-    required: [true, "Zwierzę musi mieć maksymalną długość"],
+    required: [true, "Animal must have a maximum length"],
   },
   min_height: {
     type: Number,
-    required: [true, "Zwierzę musi mieć minimalną wysokość"],
+    required: [true, "Animal must have a minimum height"],
   },
   max_height: {
     type: Number,
-    required: [true, "Zwierzę musi mieć maksymalną wysokość"],
+    required: [true, "Animal must have a maximum height"],
   },
   color: {
     type: [String],
-    required: [true, "Zwierzę musi mieć kolor"],
+    required: [true, "Animal must have a color"],
   },
   photos: {
     type: [String],
-    required: [true, "Zwierzę musi mieć zdjęcia"],
+    required: [true, "Animal must have at least one photo"],
   },
   trivia: {
     type: [String],
