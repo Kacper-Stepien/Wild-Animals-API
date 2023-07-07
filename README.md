@@ -13,7 +13,7 @@ This is a minimalist API built with Node.js, Express, and MongoDB to get data ab
 - [Example Complex Query](#example-complex-query)
 - [Note](#note)
 - [Contact](#contact)
-<br>
+
 ## Technologies used in the project:
 [![](https://skills.thijs.gg/icons?i=js,nodejs,express,mongo,&theme=dark)](https://skills.thijs.gg)
 
