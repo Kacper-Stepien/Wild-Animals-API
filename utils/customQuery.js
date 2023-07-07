@@ -9,7 +9,7 @@ class CustomQuery {
   filter() {
     const availableFilterFields = [
       "species", // Gatunek
-      "location", // Lokalizacja (kontynent)
+      "location", // Lokalizacja
       "diet", // Dieta
       "lifestyle", // Tryb życia
       "min_population", // Minimalna populacja
@@ -99,10 +99,21 @@ class CustomQuery {
 
     const availableSortFields = [
       "name",
+      "-name",
       "species",
+      "-species",
       "population",
+      "-population",
       "location",
-      "average_life_span",
+      "-location",
+      "max_life_span",
+      "-max_life_span",
+      "max_weight",
+      "-max_weight",
+      "min_weight",
+      "-min_weight",
+      "max_speed",
+      "-max_speed",
     ];
 
     if (sort) {
@@ -110,7 +121,7 @@ class CustomQuery {
         .split(",")
         .filter((field) => availableSortFields.includes(field));
       const filters = sortByFields.join(" ");
-      this.query = this.query.sort(filters);
+      this.query = this.query.sort(`${filters}`);
     } else {
       this.query = this.query.sort("-population");
     }
