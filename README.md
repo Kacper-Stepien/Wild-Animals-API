@@ -375,11 +375,11 @@ A new endpoint has been added to the API to search for animals by name. You can 
 
     GET /api/v1/animals/search/:name
 
-For example, to search for animals with the name "lion", you can make a request to:
+For example, to search for animals with the name "lew", you can make a request to:
 
-    GET /api/v1/animals/search/lion
+    GET /api/v1/animals/search/lew
 
-This will return a list of animals whose names include "lion" in a case-insensitive manner.
+This will return a list of animals whose names include "lew" in a case-insensitive manner.
 
 ## Note
 
