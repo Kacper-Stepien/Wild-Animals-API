@@ -92,7 +92,14 @@ const animalSchema = new mongoose.Schema({
   },
   lifestyle: {
     type: String,
-    enum: ["w stadzie", "samotnik", "w parach", "w rodzinie", "w grupie"],
+    enum: [
+      "w stadzie",
+      "samotnik",
+      "w parach",
+      "w rodzinie",
+      "w grupie",
+      "w koloni",
+    ],
     required: [true, "Animal must have a lifestyle"],
   },
   min_life_span: {
