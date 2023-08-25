@@ -27,6 +27,7 @@ const animalSchema = new mongoose.Schema({
       "australia",
       "antarktyda",
       "arktyka",
+      "ocean",
     ],
     required: [true, "Animal must have a location"],
   },
@@ -114,6 +115,7 @@ const animalSchema = new mongoose.Schema({
     type: String,
     enum: [
       "sierść",
+      "włosy",
       "pióra",
       "łuski",
       "skóra",
